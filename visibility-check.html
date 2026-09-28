@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101411">
+  <meta name="description" content="Request a free website visibility check from Noted.">
+  <title>Free Visibility Check — Noted</title>
+  <style>
+    :root{color-scheme:dark;--bg:#101411;--panel:#171d19;--text:#f1f4ef;--muted:#a1aaa3;--line:#303a33;--green:#a8d7b5;--green-ink:#142219}
+    *{box-sizing:border-box;margin:0;padding:0}body{min-height:100vh;background:radial-gradient(ellipse at 50% 0,#243a2a 0,transparent 46%),var(--bg);color:var(--text);font:16px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}a{color:inherit;text-decoration:none}a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--green);outline-offset:3px}.container{width:min(calc(100% - 40px),1080px);margin:0 auto}
+    header{height:76px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(16,20,17,.75);display:flex;align-items:center}.brand{font-size:25px;font-weight:800;letter-spacing:-1.5px}.brand span{color:var(--green)}
+    main{flex:1;display:grid;place-items:center;padding:72px 0}.card{width:min(100%,690px);padding:clamp(28px,6vw,58px);border:1px solid #35453a;border-radius:16px;background:rgba(23,29,25,.94);box-shadow:0 24px 80px rgba(0,0,0,.25)}.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--green);font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;margin-bottom:18px}.dot{width:7px;height:7px;border-radius:50%;background:#79bd8d;box-shadow:0 0 12px #79bd8d}h1{font-size:clamp(36px,7vw,58px);line-height:1.02;letter-spacing:-.055em;margin-bottom:17px}h1 span{color:var(--green)}.intro{max-width:530px;color:var(--muted);margin-bottom:31px}.domain-label{display:block;margin-bottom:9px;font-size:13px;font-weight:700}.domain-input{width:100%;height:54px;border:1px solid #46534a;border-radius:8px;background:#101411;color:var(--text);padding:0 15px;font:inherit}.domain-input::placeholder{color:#737e76}.hint{margin:8px 0 19px;color:#8f9a92;font-size:12px}.submit{width:100%;min-height:50px;border:0;border-radius:8px;background:var(--green);color:var(--green-ink);font:inherit;font-weight:800;cursor:pointer;transition:background .2s,transform .2s}.submit:hover{background:#bce5c5;transform:translateY(-1px)}.status{min-height:24px;margin-top:15px;color:#f0a6a6;font-size:13px}.back{display:inline-block;margin-top:24px;color:#b9c4bb;font-size:13px}.back:hover{color:var(--green)}.privacy{border-top:1px solid var(--line);padding-top:20px;color:#849087;font-size:12px}.privacy strong{color:#b9c4bb}
+    footer{padding:22px 0;border-top:1px solid var(--line);color:#849087;font-size:12px}.footer-inner{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+    @media(max-width:520px){main{padding:38px 0}.container{width:min(calc(100% - 30px),1080px)}.footer-inner{flex-direction:column;text-align:center}}
+  </style>
+</head>
+<body>
+  <header><div class="container"><a class="brand" href="Noted.ProfWeb.html#top" aria-label="Noted home">Noted<span>.</span></a></div></header>
+  <main><div class="container"><section class="card" aria-labelledby="title">
+    <div class="eyebrow"><span class="dot"></span>Complimentary website review</div>
+    <h1 id="title">Where does your business <span>show up?</span></h1>
+    <p class="intro">Enter your website address to request a visibility check across search and AI recommendations. We’ll review it and follow up with what we find.</p>
+    <form id="visibility-form" novalidate>
+      <label class="domain-label" for="domain">Your website domain</label>
+      <input class="domain-input" id="domain" name="domain" type="text" inputmode="url" autocomplete="url" placeholder="yourbusiness.com" required aria-describedby="domain-hint status">
+      <p class="hint" id="domain-hint">For example: yourbusiness.com</p>
+      <button class="submit" type="submit">Run my free visibility check</button>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </form>
+    <p class="privacy"><strong>What happens next:</strong> your email app will open with your domain in a request to Noted. Sending it lets us begin your manual review.</p>
+    <a class="back" href="Noted.ProfWeb.html#contact">← Back to Noted</a>
+  </section></div></main>
+  <footer><div class="container footer-inner"><span>© 2026 Noted. All rights reserved.</span><span>Local ads &amp; AI search visibility.</span></div></footer>
+  <script>
+    const form = document.querySelector('#visibility-form');
+    const field = document.querySelector('#domain');
+    const status = document.querySelector('#status');
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const raw = field.value.trim();
+      const candidate = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+      let parsed;
+      try { parsed = new URL(candidate); } catch { parsed = null; }
+      const domain = parsed?.hostname || '';
+      if (!domain || !domain.includes('.') || domain.startsWith('.') || domain.endsWith('.') || !/^[a-z0-9.-]+$/i.test(domain)) {
+        status.textContent = 'Enter a valid domain, such as yourbusiness.com.';
+        field.focus();
+        return;
+      }
+      const subject = encodeURIComponent(`Free visibility check — ${domain}`);
+      const body = encodeURIComponent(`Hi Noted,\n\nPlease run a free visibility check for my business website: ${domain}\n\nThanks!`);
+      status.style.color = '#a8d7b5';
+      status.textContent = `Opening an email request for ${domain}…`;
+      window.location.href = `mailto:syedsulaiman928@gmail.com?subject=${subject}&body=${body}`;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Noted — Local Ads & AI Search Visibility</title>
+  <meta
+    name="description"
+    content="Noted helps local businesses get found in Google search results and AI recommendations."
+  />
+
+  <style>
+    :root {
+      --bg: #f7f8f6;
+      --dark: #101412;
+      --muted: #66706a;
+      --green: #1d6b45;
+      --green-dark: #12452e;
+      --green-light: #dceee3;
+      --white: #ffffff;
+      --border: #dfe5e0;
+      --card: #ffffff;
+      --max-width: 1160px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(100% - 40px, var(--max-width));
+      margin: 0 auto;
+    }
+
+    /* NAV */
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(247, 248, 246, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(223, 229, 224, 0.8);
+    }
+
+    .nav-inner {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--green);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #454d48;
+    }
+
+    .nav-links a:hover {
+      color: var(--green);
+    }
+
+    .nav-cta {
+      background: var(--dark);
+      color: white !important;
+      padding: 11px 18px;
+      border-radius: 8px;
+      transition: 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: var(--green);
+    }
+
+    /* HERO */
+
+    .hero {
+      padding: 110px 0 100px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: var(--green-light);
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.5;
+      top: -250px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: -1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green-light);
+      color: var(--green-dark);
+      border-radius: 999px;
+      padding: 7px 13px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 25px;
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    h1 {
+      max-width: 900px;
+      margin: 0 auto;
+      font-size: clamp(48px, 7vw, 82px);
+      line-height: 0.98;
+      letter-spacing: -4px;
+      font-weight: 800;
+    }
+
+    h1 span {
+      color: var(--green);
+    }
+
+    .hero-text {
+      max-width: 650px;
+      margin: 28px auto 35px;
+      color: var(--muted);
+      font-size: 19px;
+      line-height: 1.7;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 23px;
+      border-radius: 9px;
+      font-size: 15px;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--dark);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--green);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--border);
+      background: white;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    /* TRUST */
+
+    .trust {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 0;
+      background: white;
+    }
+
+    .trust-inner {
+      display: flex;
+      justify-content: center;
+      gap: 45px;
+      flex-wrap: wrap;
+      color: #747c77;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* SECTION */
+
+    section {
+      padding: 100px 0;
+    }
+
+    .section-heading {
+      max-width: 680px;
+      margin-bottom: 50px;
+    }
+
+    .section-label {
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(34px, 5vw, 52px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 18px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    /* SERVICES */
+
+    .services {
+      background: white;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .service-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 38px;
+      background: var(--card);
+      transition: 0.25s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 45px rgba(16, 20, 18, 0.08);
+    }
+
+    .service-icon {
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--green-light);
+      color: var(--green-dark);
+      font-size: 21px;
+      font-weight: 800;
+      margin-bottom: 25px;
+    }
+
+    .service-card h3 {
+      font-size: 25px;
+      margin-bottom: 10px;
+    }
+
+    .service-card > p {
+      color: var(--muted);
+      margin-bottom: 25px;
+    }
+
+    .service-card ul {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .service-card li {
+      color: #424a45;
+      font-size: 14px;
+      padding-left: 23px;
+      position: relative;
+    }
+
+    .service-card li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    /* HOW IT WORKS */
+
+    .process {
+      background: var(--bg);
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .process-card {
+      padding: 30px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: white;
+    }
+
+    .number {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 25px;
+    }
+
+    .process-card h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .process-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* PRICING */
+
+    .pricing {
+      background: white;
+    }
+
+    .pricing-header {
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto 50px;
+    }
+
+    .pricing-header p {
+      color: var(--muted);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .price-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 32px;
+      position: relative;
+      background: white;
+    }
+
+    .price-card.featured {
+      border: 2px solid var(--green);
+      box-shadow: 0 15px 40px rgba(29, 107, 69, 0.1);
+    }
+
+    .popular {
+      position: absolute;
+      top: -13px;
+      left: 25px;
+      background: var(--green);
+      color: white;
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .price-card h3 {
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+
+    .price {
+      font-size: 43px;
+      font-weight: 800;
+      letter-spacing: -2px;
+      margin: 15px 0 5px;
+    }
+
+    .price span {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    .price-description {
+      color: var(--muted);
+      font-size: 13px;
+      min-height: 42px;
+      margin-bottom: 25px;
+    }
+
+    .features {
+      list-style: none;
+      border-top: 1px solid var(--border);
+      padding-top: 22px;
+      display: grid;
+      gap: 13px;
+    }
+
+    .features li {
+      font-size: 14px;
+      color: #444c47;
+      padding-left: 22px;
+      position: relative;
+    }
+
+    .features li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .onboarding {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 28px;
+    }
+
+    /* CTA */
+
+    .cta-section {
+      padding: 100px 0;
+    }
+
+    .cta-box {
+      background: var(--dark);
+      color: white;
+      border-radius: 25px;
+      padding: 70px 50px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-box::before {
+      content: "";
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      background: var(--green);
+      opacity: 0.15;
+      filter: blur(70px);
+      top: -180px;
+      right: -100px;
+    }
+
+    .cta-box h2 {
+      position: relative;
+      max-width: 650px;
+      margin: 0 auto 15px;
+    }
+
+    .cta-box p {
+      position: relative;
+      color: #b9c1bc;
+      max-width: 560px;
+      margin: 0 auto 30px;
+    }
+
+    .contact-info {
+      position: relative;
+      margin-top: 28px;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+      font-size: 14px;
+      color: #c9cfcc;
+    }
+
+    .contact-info a:hover {
+      color: white;
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      background: white;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      color: #747c77;
+      font-size: 13px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 800px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 80px 0 75px;
+      }
+
+      h1 {
+        letter-spacing: -2.5px;
+      }
+
+      .service-grid,
+      .pricing-grid,
+      .process-grid {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 75px 0;
+      }
+
+      .service-card,
+      .price-card {
+        padding: 28px;
+      }
+
+      .cta-box {
+        padding: 55px 25px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        width: min(100% - 28px, var(--max-width));
+      }
+
+      .hero-text {
+        font-size: 16px;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .trust-inner {
+        gap: 15px;
+      }
+    }
+  </style>
+  <style>
+    :root { color-scheme: dark; --bg:#101411; --dark:#f1f4ef; --muted:#a1aaa3; --green:#a8d7b5; --green-dark:#142219; --green-light:#1b2920; --white:#171d19; --border:#303a33; --card:#171d19; }
+    body { background:#101411; color:#f1f4ef; }
+    nav { background:rgba(16,20,17,.92); border-color:#303a33; }
+    .nav-links { color:#c2c9c3; }
+    .nav-cta,.btn-primary { background:#a8d7b5; color:#142219 !important; }
+    .hero::before { background:#315d40; opacity:.35; }
+    .eyebrow { color:#c5dec9; }
+    .hero-text,.section-heading p,.pricing-header p,.process-card p,.service-card > p,.price-description,.onboarding { color:#a1aaa3; }
+    .btn-secondary,.service-card,.process-card,.price-card { background:#171d19; color:#f1f4ef; border-color:#303a33; }
+    .trust,footer,.services,.pricing { background:#141916; border-color:#303a33; }
+    .trust-inner,.footer-inner { color:#aab3ac; }
+    .service-card li,.features li { color:#c3cbc5; }
+    .service-icon { color:#a8d7b5; background:#203126; }
+    .price-card.featured { border-color:#7eae89; background:#1a241d; }
+    .popular { background:#a8d7b5; color:#142219; }
+    .cta-box { background:linear-gradient(135deg,#1b2920,#171d19 72%); border:1px solid #34453a; }
+    .cta-box p,.contact-info { color:#b3bdb5; }
+    @media(max-width:800px) { .nav-links { display:flex; position:absolute; top:76px; left:0; right:0; padding:12px 20px; flex-direction:column; gap:0; background:#131815; border-bottom:1px solid #303a33; } .nav-links a { padding:10px; } }
+  </style>
+</head>
+
+<body id="top">
+
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="#top" class="logo">Noted<span>.</span></a>
+
+      <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact">Contact</a>
+        <a href="#contact" class="nav-cta">Free Visibility Check</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container">
+
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        Local growth, made visible
+      </div>
+
+      <h1>
+        Your customers already asked.
+        <span>Are you the answer?</span>
+      </h1>
+
+      <p class="hero-text">
+        Noted helps local businesses get found twice — in Google search
+        results, and in the AI answers more customers are asking for
+        recommendations first.
+      </p>
+
+      <div class="buttons">
+        <a href="#contact" class="btn btn-primary">
+          Get a free visibility check
+        </a>
+
+        <a href="#services" class="btn btn-secondary">
+          See how it works
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- TRUST -->
+  <div class="trust">
+    <div class="container trust-inner">
+      <span>Google Search</span>
+      <span>Google Maps</span>
+      <span>AI Search</span>
+      <span>Meta</span>
+      <span>Local SEO</span>
+    </div>
+  </div>
+
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="section-label">What we do</div>
+
+        <h2>Two problems.<br />One fix.</h2>
+
+        <p>
+          Most local businesses are losing customers before they ever hear
+          the phone ring — either because they're outbid on search, or
+          invisible to the AI tools now answering "who should I hire."
+        </p>
+      </div>
+
+
+      <div class="service-grid">
+
+        <div class="service-card">
+          <div class="service-icon">↗</div>
+
+          <h3>Ads Management</h3>
+
+          <p>
+            Google and Meta campaigns built for businesses that need the
+            phone to ring, not vanity metrics.
+          </p>
+
+          <ul>
+            <li>Search campaign setup & keyword targeting</li>
+            <li>Ad copy and creative for paid social</li>
+            <li>Conversion tracking, so spend maps to real leads</li>
+            <li>Monthly reporting on cost per lead, not just clicks</li>
+          </ul>
+        </div>
+
+
+        <div class="service-card">
+          <div class="service-icon">✦</div>
+
+          <h3>GEO — AI Search Visibility</h3>
+
+          <p>
+            Structured, credible, and consistent enough that AI tools
+            recommend you by name.
+          </p>
+
+          <ul>
+            <li>Schema markup for your site and service areas</li>
+            <li>Review generation & directory consistency</li>
+            <li>Local, specific content that gets cited, not skimmed</li>
+            <li>Tracking whether you actually show up in AI answers</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- PROCESS -->
+  <section class="process" id="process">
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="section-label">How it works</div>
+        <h2>Get found.<br />Get contacted.</h2>
+      </div>
+
+      <div class="process-grid">
+
+        <div class="process-card">
+          <div class="number">01 — AUDIT</div>
+          <h3>Find the gaps</h3>
+          <p>
+            We analyze your current Google presence, website, reviews,
+            directories, ads, and AI visibility.
+          </p>
+        </div>
+
+        <div class="process-card">
+          <div class="number">02 — BUILD</div>
+          <h3>Fix the foundation</h3>
+          <p>
+            We clean up your local presence, implement schema, build
+            campaigns, and create location-specific content.
+          </p>
+        </div>
+
+        <div class="process-card">
+          <div class="number">03 — GROW</div>
+          <h3>Track what matters</h3>
+          <p>
+            We monitor leads, cost per lead, search visibility, and whether
+            AI tools are actually mentioning your business.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+
+      <div class="pricing-header">
+        <div class="section-label">Simple pricing</div>
+
+        <h2>Pick your level of growth.</h2>
+
+        <p>
+          Month to month. No long contracts. Choose the plan that matches
+          how much ground you're trying to cover.
+        </p>
+      </div>
+
+
+      <div class="pricing-grid">
+
+        <!-- STARTER -->
+        <div class="price-card">
+
+          <h3>Starter</h3>
+
+          <div class="price">
+            $750 <span>/mo</span>
+          </div>
+
+          <p class="price-description">
+            Single-location businesses starting with ads + GEO.
+          </p>
+
+          <ul class="features">
+            <li>Ad management — 1 platform</li>
+            <li>GEO / schema — one-time setup</li>
+            <li>Monthly summary</li>
+          </ul>
+
+        </div>
+
+
+        <!-- GROWTH -->
+        <div class="price-card featured">
+
+          <div class="popular">Most chosen</div>
+
+          <h3>Growth</h3>
+
+          <div class="price">
+            $1,250 <span>/mo</span>
+          </div>
+
+          <p class="price-description">
+            Established businesses ready to grow across channels.
+          </p>
+
+          <ul class="features">
+            <li>Ad management — 2 platforms</li>
+            <li>GEO / schema + quarterly refresh</li>
+            <li>Monthly reporting</li>
+            <li>Strategy call</li>
+          </ul>
+
+        </div>
+
+
+        <!-- SCALE -->
+        <div class="price-card">
+
+          <h3>Scale</h3>
+
+          <div class="price">
+            $2,000+ <span>/mo</span>
+          </div>
+
+          <p class="price-description">
+            $3,000+ ad spend or multiple locations.
+          </p>
+
+          <ul class="features">
+            <li>Full multi-channel ad management</li>
+            <li>GEO + ongoing expansion</li>
+            <li>Detailed reporting</li>
+            <li>Bi-weekly strategy calls</li>
+          </ul>
+
+        </div>
+
+      </div>
+
+      <p class="onboarding">
+        One-time onboarding: <strong>$500</strong> — covers audit,
+        schema setup, and directory cleanup.
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- CTA -->
+  <section class="cta-section" id="contact">
+    <div class="container">
+
+      <div class="cta-box">
+
+        <h2>Let's get you found.</h2>
+
+        <p>
+          Get a free visibility check showing how your business currently
+          appears in search and AI answers.
+        </p>
+
+        <a
+          href="mailto:syedsulaiman928@gmail.com?subject=Free Visibility Check"
+          class="btn btn-primary"
+        >
+          Get my free visibility check
+        </a>
+
+        <div class="contact-info">
+          <a href="mailto:syedsulaiman928@gmail.com">
+            syedsulaiman928@gmail.com
+          </a>
+
+          <a href="tel:+15719261657">
+            571-926-1657
+          </a>
+
+          <span>Virginia</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-inner">
+      <div>
+        <strong>Noted.</strong> — Local ads & AI search visibility.
+      </div>
+
+      <div>
+        © 2026 Noted. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    // Smooth navigation for browsers that don't fully support CSS scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener("click", function(e) {
+        const target = document.querySelector(this.getAttribute("href"));
+
+        if (target) {
+          e.preventDefault();
+
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
